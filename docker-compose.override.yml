@@ -1,0 +1,19 @@
+version: '3.8'
+
+# Override for development environment
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: build
+    volumes:
+      - .:/src
+      - ~/.nuget/packages:/root/.nuget/packages:ro
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+    command: dotnet watch run --project src/DotNet10Template.API/DotNet10Template.API.csproj
+    ports:
+      - "5000:5000"
+      - "5001:5001"
